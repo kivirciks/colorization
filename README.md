@@ -64,11 +64,9 @@
     <th>111 ms</th>
     <th>Python нативно</th>
     <th>C++</th>
-   <tr>
     <th>Wall time/th>
     <th>112 ms</th>
     <th>Python нативно</th>
     <th>C++</th>
-   </tr>
  </table>
 Таким образом, ...
