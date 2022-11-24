@@ -1,0 +1,69 @@
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
+#include <iostream>
+#include <shlwapi.h>
+#include <ctime>
+#include <cstdio>
+
+using namespace cv;
+using namespace std;
+
+
+int main()
+{
+    //кириллица в консоли
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    double start = clock();
+
+    //загрузка изображения
+    cout << "Введите полный путь фотографии: " << endl;
+    string path;
+    //cin >> path;
+
+    Mat img = imread("dog.jpeg");
+    //вывод оригинального фото
+    namedWindow("original", WINDOW_AUTOSIZE);
+    imshow("original", img);
+
+    Mat colormat = img;
+    for (int i = 0; i < colormat.rows; i++)
+
+        for (int j = 0; j < colormat.cols; j++)
+
+        {
+
+            if (colormat.at<Vec3b>(i, j)[0] >= 0 && colormat.at<Vec3b>(i, j)[0] < 65) {
+                colormat.at<Vec3b>(i, j)[0] = 165;
+                colormat.at<Vec3b>(i, j)[1] = 42;
+                colormat.at<Vec3b>(i, j)[2] = 42;
+            }
+            else  if (colormat.at<Vec3b>(i, j)[0] >= 65 && colormat.at<Vec3b>(i, j)[0] < 130) {
+                colormat.at<Vec3b>(i, j)[0] = 255;
+                colormat.at<Vec3b>(i, j)[1] = 165;
+                colormat.at<Vec3b>(i, j)[2] = 0;
+            }
+            else  if (colormat.at<Vec3b>(i, j)[0] >= 130 && colormat.at<Vec3b>(i, j)[0] <= 195) {
+                colormat.at<Vec3b>(i, j)[0] = 255;
+                colormat.at<Vec3b>(i, j)[1] = 255;
+                colormat.at<Vec3b>(i, j)[2] = 0;
+            }
+            else {
+                colormat.at<Vec3b>(i, j)[0] = 0;
+                colormat.at<Vec3b>(i, j)[1] = 255;
+                colormat.at<Vec3b>(i, j)[2] = 0;
+            }
+        }
+
+    //вывод цветного фото
+    namedWindow("windwindow_color", WINDOW_AUTOSIZE);
+    imshow("windwindow_color", colormat);
+    imwrite("colorIMG.jpg", colormat);
+    printf("%.4lf\n", (clock() - start) / CLOCKS_PER_SEC);
+    waitKey(0);
+    return 0;
+}
